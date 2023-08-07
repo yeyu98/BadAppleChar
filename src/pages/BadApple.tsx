@@ -2,7 +2,7 @@
  * @Author: lzy-Jerry
  * @Date: 2023-07-29 20:54:23
  * @LastEditors: lzy-Jerry
- * @LastEditTime: 2023-08-07 23:58:51
+ * @LastEditTime: 2023-08-08 00:00:50
  * @Description: 
  */
 import { useEffect, useRef } from 'react'
@@ -36,6 +36,7 @@ function BadApple(props: Props) {
       }
   }
 
+  // NOTE 视频上传
   const upload = () => {
 
   }
@@ -93,7 +94,7 @@ function BadApple(props: Props) {
 
   return (
     <>
-      <button onClick={upload}>上传</button>
+      {/* <button onClick={upload}>上传</button> */}
       <div className='bad-apple-wrapper'>
         <video ref={videoRef} src={videoUrl} width={600} height={480} controls autoPlay={false} loop={true}></video>
         <div ref={divRef} className='bad-apple-screen'></div>

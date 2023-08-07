@@ -2,7 +2,7 @@
  * @Author: lzy-Jerry
  * @Date: 2023-07-29 20:54:23
  * @LastEditors: lzy-Jerry
- * @LastEditTime: 2023-08-07 23:24:42
+ * @LastEditTime: 2023-08-07 23:58:51
  * @Description: 
  */
 import { useEffect, useRef } from 'react'
@@ -36,7 +36,11 @@ function BadApple(props: Props) {
       }
   }
 
-  const paint = (width: number, height: number) => {
+  const upload = () => {
+
+  }
+
+  const paint = (width: number, height: number, isRenderContinue: boolean=true) => {
       if(videoRef.current && canvasRef.current && divRef.current) {
         const ctx = canvasRef.current.getContext('2d')!
         if(videoRef.current.readyState > 1) {
@@ -59,7 +63,7 @@ function BadApple(props: Props) {
             finallyHtml += (p + '</div>')
           }
           divRef.current.innerHTML = finallyHtml
-          renderFrame(width, height)
+          isRenderContinue && renderFrame(width, height)
         }
     }
   }
@@ -76,7 +80,7 @@ function BadApple(props: Props) {
   })
 
   useEffect(() => {
-    videoRef.current?.addEventListener("play", () => {
+    videoRef.current?.addEventListener("canplay", () => {
       if(videoRef.current && canvasRef.current) {
         const width = videoRef.current.offsetWidth
         const height = videoRef.current.offsetHeight
@@ -89,11 +93,12 @@ function BadApple(props: Props) {
 
   return (
     <>
-        <div className='bad-apple-wrapper'>
-          <video ref={videoRef} src={videoUrl} width={600} height={480} controls autoPlay={false} loop={true}></video>
-          <canvas ref={canvasRef}/>
-          <div ref={divRef} className='bad-apple-screen'></div>
-        </div>
+      <button onClick={upload}>上传</button>
+      <div className='bad-apple-wrapper'>
+        <video ref={videoRef} src={videoUrl} width={600} height={480} controls autoPlay={false} loop={true}></video>
+        <div ref={divRef} className='bad-apple-screen'></div>
+        <canvas ref={canvasRef} className='canvas'/>
+      </div>
     </>
   )
 }

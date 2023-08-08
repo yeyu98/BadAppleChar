@@ -2,10 +2,11 @@
  * @Author: lzy-Jerry
  * @Date: 2023-07-29 20:54:23
  * @LastEditors: lzy-Jerry
- * @LastEditTime: 2023-08-08 00:00:50
+ * @LastEditTime: 2023-08-09 00:18:43
  * @Description: 
  */
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import Upload from '@/components/Upload'
 import videoUrl from "@/assets/video.mp4"
 import "./BadApple.less"
 
@@ -15,6 +16,7 @@ function BadApple(props: Props) {
   const videoRef = useRef<HTMLVideoElement | null>(null)
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const divRef = useRef<HTMLDivElement | null>(null)
+  const [url, setUrl] = useState<string>(videoUrl)
 
   const generateText = (g: number) => {
       if (g <= 30) {
@@ -37,8 +39,10 @@ function BadApple(props: Props) {
   }
 
   // NOTE 视频上传
-  const upload = () => {
-
+  const upload = (url?: string) => {
+    if(url) {
+      setUrl(url)
+    }
   }
 
   const paint = (width: number, height: number, isRenderContinue: boolean=true) => {
@@ -69,12 +73,21 @@ function BadApple(props: Props) {
     }
   }
 
-  const renderFrame = (width: number, height: number) => {
+  const renderFrame = (width: number, height: number, isRenderLoop: boolean = true) => {
     window.requestAnimationFrame(() => {
-      paint(width, height)
+      paint(width, height, isRenderLoop)
     })
   }
 
+  const handlePaint = (isRenderLoop: boolean = true) => {
+    if(videoRef.current && canvasRef.current) {
+      const width = videoRef.current.offsetWidth
+      const height = videoRef.current.offsetHeight
+      canvasRef.current.width = width 
+      canvasRef.current.height = height 
+      renderFrame(width, height, isRenderLoop)
+    }
+  }
 
   useEffect(() => {
     document.title = "💃"
@@ -82,23 +95,19 @@ function BadApple(props: Props) {
 
   useEffect(() => {
     videoRef.current?.addEventListener("canplay", () => {
-      if(videoRef.current && canvasRef.current) {
-        const width = videoRef.current.offsetWidth
-        const height = videoRef.current.offsetHeight
-        canvasRef.current.width = width 
-        canvasRef.current.height = height 
-        renderFrame(width, height)
-      }
+      handlePaint()
     })
   })
 
   return (
     <>
-      {/* <button onClick={upload}>上传</button> */}
-      <div className='bad-apple-wrapper'>
-        <video ref={videoRef} src={videoUrl} width={600} height={480} controls autoPlay={false} loop={true}></video>
-        <div ref={divRef} className='bad-apple-screen'></div>
-        <canvas ref={canvasRef} className='canvas'/>
+      <div className='bad-apple'>
+        <Upload onChange={upload}/>
+        <div className='bad-apple-wrapper'>
+          <video ref={videoRef} src={url} width={600} height={480} controls autoPlay={false} loop={true}></video>
+          <div ref={divRef} className='bad-apple-screen'></div>
+          <canvas ref={canvasRef} className='canvas'/>
+        </div>
       </div>
     </>
   )

@@ -2,7 +2,7 @@
  * @Author: lzy-Jerry
  * @Date: 2023-07-29 20:54:23
  * @LastEditors: lzy-Jerry
- * @LastEditTime: 2023-09-01 21:26:44
+ * @LastEditTime: 2023-09-01 21:53:59
  * @Description: 
  */
 import { useEffect, useRef, useState } from 'react'
@@ -79,7 +79,6 @@ function BadApple(props: Props) {
 
   const handlePaint = (isRenderLoop: boolean = true) => {
     if(videoRef.current && canvasRef.current) {
-      debugger
       const width = videoRef.current.offsetWidth
       const height = videoRef.current.offsetHeight
       canvasRef.current.width = width 
@@ -100,7 +99,7 @@ function BadApple(props: Props) {
       <div className='bad-apple'>
         <Upload onChange={upload}/>
         <div className='bad-apple-wrapper'>
-          <video ref={videoRef} src={url} width={600} height={480} controls autoPlay={false} loop={true} controlslist={'nodownload nofullscreen'}></video>
+          <video ref={videoRef} src={url} width={600} height={480} controls autoPlay={false} loop={true} controlsList={'nodownload nofullscreen'}></video>
           <div ref={divRef} className='bad-apple-screen'></div>
           <canvas ref={canvasRef} className='canvas'/>
         </div>

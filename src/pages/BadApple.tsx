@@ -2,7 +2,7 @@
  * @Author: lzy-Jerry
  * @Date: 2023-07-29 20:54:23
  * @LastEditors: lzy-Jerry
- * @LastEditTime: 2023-08-09 00:18:43
+ * @LastEditTime: 2023-09-01 21:18:20
  * @Description: 
  */
 import { useEffect, useRef, useState } from 'react'
@@ -48,7 +48,6 @@ function BadApple(props: Props) {
   const paint = (width: number, height: number, isRenderContinue: boolean=true) => {
       if(videoRef.current && canvasRef.current && divRef.current) {
         const ctx = canvasRef.current.getContext('2d')!
-        if(videoRef.current.readyState > 1) {
           ctx.drawImage(videoRef.current, 0, 0, width, height)
           // NOTE Uint8ClampedArray类数组
           const imageData = ctx.getImageData(0, 0, width, height)
@@ -69,7 +68,6 @@ function BadApple(props: Props) {
           }
           divRef.current.innerHTML = finallyHtml
           isRenderContinue && renderFrame(width, height)
-        }
     }
   }
 
@@ -81,6 +79,7 @@ function BadApple(props: Props) {
 
   const handlePaint = (isRenderLoop: boolean = true) => {
     if(videoRef.current && canvasRef.current) {
+      debugger
       const width = videoRef.current.offsetWidth
       const height = videoRef.current.offsetHeight
       canvasRef.current.width = width 
@@ -90,14 +89,11 @@ function BadApple(props: Props) {
   }
 
   useEffect(() => {
-    document.title = "💃"
-  })
-
-  useEffect(() => {
+    handlePaint(false)
     videoRef.current?.addEventListener("canplay", () => {
       handlePaint()
     })
-  })
+  }, [])
 
   return (
     <>

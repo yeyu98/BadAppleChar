@@ -2,7 +2,7 @@
  * @Author: lzy-Jerry
  * @Date: 2023-08-08 23:13:07
  * @LastEditors: lzy-Jerry
- * @LastEditTime: 2023-08-09 00:14:04
+ * @LastEditTime: 2023-09-01 21:12:57
  * @Description: 
  */
 import {ChangeEvent, useEffect, useRef} from 'react';
@@ -33,7 +33,7 @@ function Upload(props: IUploadProps) {
     return (
         <>
             <span role='button'>
-                <input type="file" ref={inputRef} className='file'/>
+                <input type="file" ref={inputRef} className='file' accept='video/*'/>
                 <div className='button' onClick={handleClick}>{text}</div> 
             </span>
         </>

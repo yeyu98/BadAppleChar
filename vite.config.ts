@@ -1,8 +1,8 @@
 /*
  * @Author: xiaohu
  * @Date: 2022-12-07 15:34:10
- * @LastEditors: xiaohu
- * @LastEditTime: 2023-05-17 11:52:07
+ * @LastEditors: lzy-Jerry
+ * @LastEditTime: 2023-09-05 22:17:27
  * @FilePath: \react-demo-ts\vite.config.ts
  * @Description: 
  */
@@ -12,6 +12,7 @@ import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: './',
   plugins: [react()],
   resolve: {
     alias: {
